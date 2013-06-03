@@ -73,7 +73,7 @@ class Decoder extends \Eloquent{
 		return $final;
 	}
 
-	
+
 	public function processRawInput()
 	{
 		$output = '';
@@ -92,13 +92,13 @@ class Decoder extends \Eloquent{
 			}
 			else
 			{
-				if($input['time'] < ($this->averageUpTime / 2))
+				if($input['time'] < ($this->averageUpTime * 1.1))
 				{
 					$output .= ' ';
 				}
 				else
 				{
-					$output .= ' ';
+					$output .= '<br />';
 				}
 			}
 		}
