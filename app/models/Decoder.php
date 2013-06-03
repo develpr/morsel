@@ -73,7 +73,7 @@ class Decoder extends \Eloquent{
 		return $final;
 	}
 
-
+	
 	public function processRawInput()
 	{
 		$output = '';
