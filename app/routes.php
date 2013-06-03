@@ -34,6 +34,8 @@ Route::get('/decode/{id}', function($id)
 
 	$input6 = 'a0b297a1b224a0b146a1b191a0b332a1b517a0b156a1b571a0b133a1b137a0b146a1b95a0b153a1b195a0b371a1b576a0b149a1b97a0b163a1b468a0b312a1b297a0b176';
 
+	$input7 = 'a0b291a1b300a0b93a1b341a0b223a1b800a0b291a1b300a0b93a1b341a0b223';
+
  	$choice = 'input' . $id;
 
 	$input = $$choice;
@@ -42,10 +44,10 @@ Route::get('/decode/{id}', function($id)
 
 	$decoder->setRawInput($input);
 
-	$output = $decoder->processRawInput();
+	$output = $decoder->decode();
 
-	die($output);
-
+	var_dump($output);
+	die();
 	//$decoder->decode()
 
 });
