@@ -36,17 +36,62 @@ Route::get('/decode/{id}', function($id)
 
 	$input7 = 'a0b291a1b300a0b93a1b341a0b223a1b800a0b291a1b300a0b93a1b341a0b223';
 
+	$input8 = 'a0b331a1b302a0b137a1b326a0b290a1b1147a0b250a1b305a0b121a1b324a0b278a1b1530a0b230a1b365a0b121a1b335a0b363a1b0a0b4a1b1080a0b245a1b333a0b109a1b306a0b309';
+
+	$input9 = 'b917a0b1069a1b902a0b1193a1b881a0b1121a1b893a0b1076a1b893a0b1059a1b876a0b1206';
+
+	$input10 = 'a0b951a1b861a0b1053a1b821a0b1016a1b937a0b968a1b966a0b1119a1b1082a0b1040a1b800a0b1017a1b801a0b1212a1b855a0b1367a1b754a0b1215a1b779a0b1072a1b835a0b1118a1b812a0b1162';
+
  	$choice = 'input' . $id;
 
 	$input = $$choice;
 
+//	$decoder = new Morsel\Decoder();
+//
+//	$decoder->setRawInput($input1);
+//	$output = $decoder->decode();
+//	var_dump($output);
+//
+//	$decoder = new Morsel\Decoder();
+//
+//	$decoder->setRawInput($input2);
+//	$output = $decoder->decode();
+//	var_dump($output);
+//
+//	$decoder = new Morsel\Decoder();
+//
+//	$decoder->setRawInput($input3);
+//	$output = $decoder->decode();
+//	var_dump($output);
+//
+//	$decoder = new Morsel\Decoder();
+//
+//	$decoder->setRawInput($input4);
+//	$output = $decoder->decode();
+//	var_dump($output);
+//
+//	$decoder = new Morsel\Decoder();
+//
+//	$decoder->setRawInput($input5);
+//	$output = $decoder->decode();
+//	var_dump($output);
+//
+//	$decoder = new Morsel\Decoder();
+//	$decoder->setRawInput($input6);
+//	$output = $decoder->decode();
+//	var_dump($output);
+//
+//	$decoder = new Morsel\Decoder();
+//	$decoder->setRawInput($input7);
+//	$output = $decoder->decode();
+//	var_dump($output);
+
 	$decoder = new Morsel\Decoder();
-
-	$decoder->setRawInput($input);
-
+	$decoder->setRawInput($input8);
 	$output = $decoder->decode();
-
 	var_dump($output);
+
+
 	die();
 	//$decoder->decode()
 

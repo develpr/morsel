@@ -5,11 +5,30 @@ namespace Morsel;
 
 class Decoder extends \Eloquent{
 
+	//The original input string
+	protected $inputRaw = '';
 
+	//The input string parsed into an array with TIME and KEY
+	protected $inputArray = array();
 
-	protected $rawInput = '';
-	protected $arrayInput = array();
-	protected $averageDownTime;
+	//The MORSE - and . representation of the input
+	protected $input = array();
+
+	//The average .
+	protected $averageDitTime = 0;
+
+	//The average -
+	protected $averageDahTime = 0;
+
+	//The breakpoint - the longest . or dit
+	protected $longestDit = 0;
+
+	//The longest character pause
+	protected $longestMidCharacterPause = 0;
+
+	//The longest letter pause
+	protected $longestLetterPause = 10000;
+
 	protected $averageUpTime;
 	protected $forwardMorseMap;
 	protected $reverseMorseMap;
@@ -86,21 +105,12 @@ class Decoder extends \Eloquent{
 	 */
 	public function decode()
 	{
-		$this->_calculateRate();
 		$this->_processRawInput();
 		$this->_translateMorseToCharacters();
 
 		return $this->characterMessage;
 	}
 
-	public function _translateMorseToCharacters()
-	{
-		foreach($this->morseMessage as $morseCode)
-		{
-
-			$this->characterMessage .= $this->reverseMorseMap[$morseCode];
-		}
-	}
 
 	/**
 	 * Set the raw input that is sent to the morsel API
@@ -118,10 +128,20 @@ class Decoder extends \Eloquent{
 	 */
 	public function setRawInput($rawInput)
 	{
-		$this->rawInput = $rawInput;
+		$this->inputRaw = $rawInput;
 
 		//Convert the raw input to an array
-		$this->arrayInput = $this->_parseInput($this->rawInput);
+		$this->inputArray = $this->_parseInput($this->inputRaw);
+		$this->_calculateDitsAndDasAndShhh();
+	}
+
+
+	public function _translateMorseToCharacters()
+	{
+		foreach($this->morseMessage as $morseCode)
+		{
+			$this->characterMessage .= $this->reverseMorseMap[$morseCode];
+		}
 	}
 
 	/**
@@ -170,12 +190,12 @@ class Decoder extends \Eloquent{
 	{
 		$output = array();
 		$buffer = '';
-		foreach($this->arrayInput as $input)
+		foreach($this->inputArray as $input)
 		{
 
 			if($input['key'] == false)
 			{
-				if($input['time'] < ($this->averageDownTime * .7))
+				if($input['time'] <= $this->longestDit)
 				{
 					$buffer .= '.';
 				}
@@ -186,14 +206,15 @@ class Decoder extends \Eloquent{
 			}
 			else
 			{
+
 				//If it's over 3 times, then it's a space
-				if($input['time'] > ($this->averageUpTime * 3.1))
+				if($input['time'] > $this->longestMidCharacterPause)
 				{
 					$output[] = $buffer;
 					$buffer = '';
 				}
 				//else if it's around normal, then it's a new character
-				else if($input['time'] > ($this->averageUpTime * 1.1))
+				else if($input['time'] > ($this->longestLetterPause))
 				{
 					$output[] = $buffer;
 					$buffer = '';
@@ -211,31 +232,103 @@ class Decoder extends \Eloquent{
 	/**
 	 * Calculate average gaps between beeps and boops and das and dits and pauses
 	 */
-	private function _calculateRate()
+	private function _calculateDitsAndDasAndShhh()
 	{
-		$totalDownTime = 0;
-		$totalDowns = 0;
+		$totalDit = 0;
+		$totalDah = 0;
+		$downs = array();
+		$ups = array();
 
-		$totalUpTime = 0;
-		$totalUps = 0;
+		$result = array();
+		$previousUnknown = '';
 
-
-		foreach($this->arrayInput as $input)
+		//Seperate out the ups and downs
+		foreach($this->inputArray as $input)
 		{
 			if($input['key'] == false)
 			{
-				$totalDowns++;
-				$totalDownTime += $input['time'];
+				$downs[] = $input['time'];
 			}
 			else
 			{
-				$totalUps++;
-				$totalUpTime += $input['time'];
+				$ups[] = $input['time'];
 			}
 		}
 
-		$this->averageDownTime = $totalDownTime / $totalDowns;
-		$this->averageUpTime = $totalUpTime / $totalUps;
+		sort($downs);
+		sort($ups);
+
+		//Initial case
+		$previous = $downs[0];
+
+		foreach($downs as $down)
+		{
+			$this->averageDitTime += $down;
+			$totalDit++;
+			if($down > $previous*1.9)
+			{
+				$this->longestDit = $previous;
+				break;
+			}
+			$previous = $down;
+		}
+
+		$this->averageDitTime = $this->averageDitTime / $totalDit;
+
+		foreach($downs as $down)
+		{
+			if($down < $this->longestDit)
+				continue;
+
+			$totalDah++;
+			$this->averageDahTime += $down;
+		}
+
+		$this->averageDahTime = $this->averageDahTime / $totalDah;
+
+
+		//calculate the ups
+		//todo: we need to calculate the average for all previous, else we'll end up with a linear line without
+		//todo: 	deviations from the normal
+		$previous = $ups[0];
+		$upsCount = 1;
+		$upsTotal = $previous;
+		foreach($ups as $up)
+		{
+			$upsAverage = $upsTotal / $upsCount;
+
+			if($up > ($upsAverage*1.8))
+			{
+				$this->longestMidCharacterPause = $previous;
+				break;
+			}
+			$previous = $up;
+			$upsTotal += $up;
+			$upsCount++;
+
+		}
+
+		if($this->longestMidCharacterPause == 0)
+			$this->longestMidCharacterPause = $previous;
+
+		$previous = $ups[0];
+		foreach($ups as $up)
+		{
+			if($up <= $this->longestMidCharacterPause)
+			{
+				$previous = $up;
+				continue;
+			}
+
+			if($up > $previous*2.9)
+			{
+				$this->longestLetterPause = $up;
+				break;
+			}
+		}
+
+		$hi = "HI";
+
 	}
 
 }
