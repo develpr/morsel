@@ -140,7 +140,10 @@ class Decoder extends \Eloquent{
 	{
 		foreach($this->morseMessage as $morseCode)
 		{
-			$this->characterMessage .= $this->reverseMorseMap[$morseCode];
+			if(key_exists($morseCode, $this->reverseMorseMap))
+				$this->characterMessage .= $this->reverseMorseMap[$morseCode];
+			else
+				$this->characterMessage .= '*';
 		}
 	}
 
