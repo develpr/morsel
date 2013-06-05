@@ -34,11 +34,16 @@ class MessageController extends \BaseController {
 			$times[] = $input['time'];
 		}
 
+
+
 		$viewData = array(
 			'message'	=> $message,
 			'text'		=> $text,
 			'rawArray'	=> $decoder->getInputArray(),
-			'times'		=> $times
+			'times'		=> $times,
+			'averageDit'=> $decoder->getAverageDit(),
+			'averageDah'=> $decoder->getAverageDah(),
+			'longestMidCharacterPause' => $decoder->getLongestMidCharacterPause()
 		);
 
 		$this->layout->content = View::make('messages.show')->with($viewData);

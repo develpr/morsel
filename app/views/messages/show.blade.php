@@ -33,16 +33,20 @@ Morsel Test
 			<?php echo implode(',',$times); ?>
 		</span>
 	</div>
-	<div class="large-6 small-12 columns">
+	<div class="large-6 small-12 columns panel">
 		<h6>Message info</h6>
 		<table>
 			<tr>
-				<td>
-					Message
-				</td>
-				<td>
-					{{$text}}
-				</td>
+				<td>Message</td>
+				<td>{{$text}}</td>
+			</tr>
+			<tr>
+				<td>Average .</td>
+				<td>{{$averageDit}}</td>
+			</tr>
+			<tr>
+				<td>Average -</td>
+				<td>{{$averageDah}}</td>
 			</tr>
 		</table>
 	</div>

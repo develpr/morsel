@@ -135,6 +135,23 @@ class Decoder extends \Eloquent{
 		$this->_calculateDitsAndDasAndShhh();
 	}
 
+	public function getAverageDit()
+	{
+		return $this->averageDitTime;
+	}
+
+	public function getAverageDah()
+	{
+		return $this->averageDahTime;
+	}
+
+	public function getLongestMidCharacterPause()
+	{
+		return $this->longestMidCharacterPause;
+	}
+
+
+
 	public function getInputArray()
 	{
 		return $this->inputArray;
