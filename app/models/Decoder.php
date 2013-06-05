@@ -330,8 +330,32 @@ class Decoder extends \Eloquent{
 			}
 		}
 
-		$hi = "HI";
-
 	}
+
+
+	public function getDownTimes()
+	{
+		$downInputs = array();
+		foreach($this->inputArray as $input)
+		{
+			if($input['key'] == false)
+				$downInputs[] = $input;
+		}
+
+		return $downInputs;
+	}
+
+	public function getUpTimes()
+	{
+		$upInputs = array();
+		foreach($this->inputArray as $input)
+		{
+			if($input['key'] == true)
+				$upInputs[] = $input;
+		}
+
+		return $upInputs;
+	}
+
 
 }

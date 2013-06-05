@@ -1,0 +1,18 @@
+/* line 3, main.css.scss */
+.spacer {
+  margin: emCalc(30px) auto; }
+
+/* line 7, main.css.scss */
+img.securebuy-logo {
+  width: 24px;
+  position: relative;
+  top: 9px;
+  left: -3px; }
+
+/* line 15, main.css.scss */
+table.provisioner th {
+  font-size: emCalc(17px); }
+/* line 18, main.css.scss */
+table.provisioner i {
+  position: relative;
+  top: 2px; }

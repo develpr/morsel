@@ -44,6 +44,50 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+
+Route::filter('auth.hmac', function()
+{
+    //First check if there is a user that is actually logged in
+    if(Auth::check())
+        return null;
+
+    $body = file_get_contents('php://input');
+    $userId = Request::header('PROVISIONER-KEY');
+
+    if(!$userId)
+        throw new AccessDeniedException('Authentication failure. No PROVISIONER-KEY was provivded in the header. This is a requirement for use of the API (or login via the web app).');
+
+    //todo: security - HMAC?
+//    $key = User::find($userId)->secretkey;
+//    $serverHmac = hash_hmac('sha1', $body, $key);
+    $clientHmac = Request::header('PROVISIONER-HMAC');
+
+    if(!$clientHmac)
+        throw new AccessDeniedException('Authentication failure. No PROVISIONER-HMAC was provivded in the header. This is a requirement for use of the API (or login via the web app).');
+
+    //$hmacValid = $clientHmac == $serverHmac ? null : 'false';
+
+//    if($hmacValid !== false)
+//    {
+//        Auth::loginUsingId($userId);
+//        return $hmacValid;
+//    }
+
+    //todo: remove this - for now we just will accept any hmac/key and log the user in
+    if(true)
+    {
+        $user = User::find($userId);
+        Auth::setUser($user);
+
+        return null;
+    }
+    else
+    {
+        throw new AccessDeniedException('You need to authenticate before you can use the API. Please be sure you are logged in or have supplied a valid/active PROVISIONER-KEY and PROVISIONER-HMAC.');
+    }
+
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
