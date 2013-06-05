@@ -29,68 +29,23 @@ Morsel Test
 </div>
 <div class="row">
     <div class="large-6 small-12 columns">
-        <form action="/account/login" method="post" name="login">
-            <fieldset>
-                <legend>Login</legend>
-                <div class="row">
-                    <div class="large-12 small-12 columns">
-                        <label>Username</label>
-                        <input name="user[username]" type="text" placeholder="Username">
-                    </div>
-                    <div class="large-12 small-12 columns">
-                        <label>Password</label>
-                        <input name="user[password]"  type="password" placeholder="Password">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-4 small-12 columns">
-                        <input class="button small expand" type="submit" value="Login" />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-    <div class="large-6 small-12 columns">
-        <form action="/account/register" method="post" name="login">
-            <fieldset>
-                <legend>Register</legend>
-                <div class="row">
-                    <div class="large-12 small-12 columns">
-                        <label for="username">Username</label>
-                        <input name="username" id="username" type="text" placeholder="Username" value="{{Input::old('username')}}">
-                    </div>
-                    <div class="large-12 small-12 columns">
-                        <label for="email">Email</label>
-                        <input name="email" id="email" type="text" placeholder="Email" value="{{Input::old('email')}}">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 small-12 columns">
-                        <label for="pass">Password</label>
-                        <input type="password" id="pass" name="pass" placeholder="Password">
-                    </div>
-                    <div class="large-12 small-12 columns">
-                        <label for="pass">Password Confirmation</label>
-                        <input type="password" id="pass_confirmation" name="pass_confirmation" placeholder="Password Confirmation">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 small-12 columns">
-                        <label for="first_name">First Name</label>
-                        <input name="first_name" id="last_name" type="text" placeholder="First Name" value="{{Input::old('first_name')}}">
-                    </div>
-                    <div class="large-12 small-12 columns">
-                        <label for="last_name">Last Name</label>
-                        <input name="last_name" id="last_name" type="text" placeholder="Last Name" value="{{Input::old('first_name')}}">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-4 small-12 columns">
-                        <input class="button small expand" type="submit" value="Register" />
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+    	<p>
+			You can login, or you can not login. Or, for now, you can try something like
+    	</p>
+		<p>
+			<a href="/messages/1/info" >View Message 1</a>
+			<br />
+			<a href="/messages/2/info" >View Message 2</a>
+			<br />
+			<a href="/messages/3/info" >View Message 3</a>
+			<br />
+			<a href="/messages/4/info" >View Message 4</a>
+			<br />
+			<a href="/messages/5/info" >View Message 5</a>
+			<br />
+			<a href="/messages/6/info" >View Message 6</a>
+		</p>
+
     </div>
 </div>
 @stop

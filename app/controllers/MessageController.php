@@ -23,7 +23,25 @@ class MessageController extends \BaseController {
 	{
 		$message = Message::find($id);
 
-		$this->layout->content = View::make('home');
+		$decoder = new Decoder();
+
+		$decoder->setRawInput($message->raw);
+		$text = $decoder->decode();
+
+		$times = array();
+		foreach($decoder->getInputArray() as $input)
+		{
+			$times[] = $input['time'];
+		}
+
+		$viewData = array(
+			'message'	=> $message,
+			'text'		=> $text,
+			'rawArray'	=> $decoder->getInputArray(),
+			'times'		=> $times
+		);
+
+		$this->layout->content = View::make('messages.show')->with($viewData);
 	}
 
 

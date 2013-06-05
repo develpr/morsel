@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'Morsel\AppController@home');
-Route::get('/message/{id}/info', 'Morsel\AppController@home');
+Route::get('/messages/{id}/info', 'Morsel\MessageController@show');
 
 
 //A simple test

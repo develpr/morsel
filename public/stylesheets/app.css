@@ -1440,8 +1440,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* line 192, ../../../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.0/scss/foundation/components/_type.scss */
 h1 {
-  font-size: 2.75em;
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 2.35em;
+  font-family: "OpenSans", "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  font-weight:500;
 }
 
 /* line 193, ../../../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.0/scss/foundation/components/_type.scss */

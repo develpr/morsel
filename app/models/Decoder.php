@@ -135,6 +135,10 @@ class Decoder extends \Eloquent{
 		$this->_calculateDitsAndDasAndShhh();
 	}
 
+	public function getInputArray()
+	{
+		return $this->inputArray;
+	}
 
 	public function _translateMorseToCharacters()
 	{
