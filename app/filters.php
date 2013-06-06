@@ -87,6 +87,38 @@ Route::filter('auth.message', function(Illuminate\Routing\Route $route)
 
 });
 
+/**
+ * 		Check to see if a user has the permissions to view a particular transmission
+ */
+Route::filter('auth.transmission', function(Illuminate\Routing\Route $route)
+{
+    //We need to:
+    //	1) see if the user requesting this transmission is either the sender or the receiver of said transmission
+
+    //User needs to be logged in for sure to be able to view any messages, so check that first
+    //Note that the user should be "virtually" signed in if it's a API request authenticated via hmac
+    if(Auth::check())
+    {
+        $user = Auth::user();
+
+        $transmissionId = $route->getParameter('transmissions');
+
+        $transmission = Morsel\Transmission::find($transmissionId);
+
+        //If this message doesn't exist, we'll let the API deal with this!
+        if(!$transmission)
+            return null;
+
+        else if($transmission->receiver->id == $user->id || $transmission->sender->id == $user->id)
+            return null;
+    }
+
+    //We made it this far... which is not good for our adventurer
+    throw new AccessDeniedException('Access not found');
+
+});
+
+
 
 Route::filter('auth.hmac', function()
 {
