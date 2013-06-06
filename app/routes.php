@@ -47,6 +47,10 @@ Route::get('/logout', function(){
 	return Redirect::to('/');
 });
 
+Route::get('/login', function(){
+    return Redirect::to('/account');
+});
+
 
 /*
  * ====================
