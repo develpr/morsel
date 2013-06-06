@@ -7,6 +7,7 @@ use Morsel\Encoder;
 use Morsel\Message;
 use Morsel\Transmission;
 use \Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class MessageController extends \BaseController {
 
@@ -117,6 +118,17 @@ class MessageController extends \BaseController {
 	public function show($id)
 	{
 		$message = Message::find($id);
+
+		if(!$message)
+		{
+//			$response = array(
+//				'error' => true,
+//				'http_status' => 404,
+//				'errorMessage' => 'Unable to location this message'
+//			);
+//			return Response::json($response, 404);
+			throw new ResourceNotFoundException('Unable to location this message');
+		}
 
 		return Response::json($message);
 	}

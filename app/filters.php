@@ -64,8 +64,6 @@ Route::filter('auth.message', function(Illuminate\Routing\Route $route)
 
 		$message = Morsel\Message::find($messageId);
 
-		$blah = $message->user;
-
 		//If this message doesn't exist, we'll let the API deal with this!
 		if(!$message)
 			return null;

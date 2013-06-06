@@ -36,8 +36,6 @@ class MessageController extends \BaseController {
 
 	public function show($id)
 	{
-		$message = Message::find($id);
-
 		/** @var \Illuminate\Http\Request $request */
 		$request = Request::create('/api/v1/messages/' . $id, 'GET');
 		$this->api->dispatchRequest($request);

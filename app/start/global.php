@@ -58,6 +58,20 @@ App::error(function(\Symfony\Component\Finder\Exception\AccessDeniedException $e
 	return Response::json($response, 401);
 });
 
+
+App::error(function(Symfony\Component\Routing\Exception\ResourceNotFoundException $exception, $code)
+{
+	$response = array(
+		'error' => true,
+		'http_status' => 404,
+		'errorMessage' => $exception->getMessage()
+	);
+	return Response::json($response, 404);
+});
+
+
+
+
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
