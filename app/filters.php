@@ -106,7 +106,6 @@ Route::filter('auth.hmac', function()
     if(strlen($random) < 5)
         throw new AccessDeniedException('A random string or raw input of at least 5 characters is required for authentication');
 
-
     $authHeader = Request::header('Auth');
 	$authHeader = explode(':',$authHeader);
 
@@ -114,15 +113,13 @@ Route::filter('auth.hmac', function()
 	$requestSignature = $authHeader[1];
 
     if(!$userId)
-        throw new AccessDeniedException('Authentication failure. No PROVISIONER-KEY was provivded in the header. This is a requirement for use of the API (or login via the web app).');
+        throw new AccessDeniedException('Authentication failure. No user key/id was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
-
-    //todo: security - HMAC?
     $key = User::find($userId)->secret_key;
     $computedSignature = md5($uri . $random . $key);
 
     if(!$requestSignature)
-        throw new AccessDeniedException('Authentication failure. No PROVISIONER-HMAC was provivded in the header. This is a requirement for use of the API (or login via the web app).');
+        throw new AccessDeniedException('Authentication failure. No signature was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
     $hmacValid = $requestSignature == $computedSignature ? null : 'false';
 
