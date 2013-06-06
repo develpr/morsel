@@ -90,43 +90,46 @@ Route::filter('auth.message', function(Illuminate\Routing\Route $route)
 
 Route::filter('auth.hmac', function()
 {
+
     //First check if there is a user that is actually logged in
     if(Auth::check())
         return null;
 
-    $body = file_get_contents('php://input');
-    $authHeader = Request::header('AUTHORIZATION');
+    $uri = Request::path();
+
+    $random = '';
+    if(Input::has('raw'))
+        $random .= Input::get('raw');
+    if(Input::has('rand'))
+        $random .= Input::get('rand');
+
+    if(strlen($random) < 5)
+        throw new AccessDeniedException('A random string or raw input of at least 5 characters is required for authentication');
+
+
+    $authHeader = Request::header('Auth');
 	$authHeader = explode(':',$authHeader);
 
 	$userId = $authHeader[0];
-	$signature = $authHeader[1];
+	$requestSignature = $authHeader[1];
 
     if(!$userId)
         throw new AccessDeniedException('Authentication failure. No PROVISIONER-KEY was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
+
     //todo: security - HMAC?
-//    $key = User::find($userId)->secretkey;
-//    $serverHmac = hash_hmac('sha1', $body, $key);
+    $key = User::find($userId)->secret_key;
+    $computedSignature = md5($uri . $random . $key);
 
-
-    if(!$signature)
+    if(!$requestSignature)
         throw new AccessDeniedException('Authentication failure. No PROVISIONER-HMAC was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
-    //$hmacValid = $clientHmac == $serverHmac ? null : 'false';
+    $hmacValid = $requestSignature == $computedSignature ? null : 'false';
 
-//    if($hmacValid !== false)
-//    {
-//        Auth::loginUsingId($userId);
-//        return $hmacValid;
-//    }
-
-    //todo: remove this - for now we just will accept any hmac/key and log the user in
-    if(true)
+    if($hmacValid !== false)
     {
-        $user = User::find($userId);
-        Auth::setUser($user);
-
-        return null;
+        Auth::loginUsingId($userId);
+        return $hmacValid;
     }
     else
     {

@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder {
             'password'      => Hash::make('password'),
             'first_name'     => 'Kevin',
             'last_name'      => 'Mitchell',
-            'secret_key'     => 'sf9k03asgasfk02!@39fk9fsDF002FAsd995%#3d'
+            'secret_key'     => 'sf9k03asgasfk02'
         ));
 
 		User::create(array(
@@ -25,7 +25,7 @@ class UserTableSeeder extends Seeder {
 			'password'      => Hash::make('password'),
 			'first_name'     => 'Kevin',
 			'last_name'      => 'Mitchell',
-			'secret_key'     => 'sf9k03asgasfk02!@39fk9fsDF002FAsd995%#3d'
+			'secret_key'     => 'sf9k03asgasfk02'
 		));
 
 		User::create(array(
@@ -35,7 +35,7 @@ class UserTableSeeder extends Seeder {
 			'password'      => Hash::make('password'),
 			'first_name'     => 'Kevin',
 			'last_name'      => 'Mitchell',
-			'secret_key'     => 'sf9k03asgasfk02!@39fk9fsDF002FAsd995%#3d'
+			'secret_key'     => 'sf9k03asgasfk02'
 		));
     }
 
