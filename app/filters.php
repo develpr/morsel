@@ -44,6 +44,12 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+Route::filter('auth.message', function()
+{
+	if(!Auth::check())
+		throw new AccessDeniedException('Access not found');
+});
+
 
 Route::filter('auth.hmac', function()
 {
@@ -52,7 +58,11 @@ Route::filter('auth.hmac', function()
         return null;
 
     $body = file_get_contents('php://input');
-    $userId = Request::header('PROVISIONER-KEY');
+    $authHeader = Request::header('AUTHORIZATION');
+	$authHeader = split(':',$authHeader);
+
+	$userId = $authHeader[0];
+	$signature = $authHeader[1];
 
     if(!$userId)
         throw new AccessDeniedException('Authentication failure. No PROVISIONER-KEY was provivded in the header. This is a requirement for use of the API (or login via the web app).');
@@ -60,9 +70,9 @@ Route::filter('auth.hmac', function()
     //todo: security - HMAC?
 //    $key = User::find($userId)->secretkey;
 //    $serverHmac = hash_hmac('sha1', $body, $key);
-    $clientHmac = Request::header('PROVISIONER-HMAC');
 
-    if(!$clientHmac)
+
+    if(!$signature)
         throw new AccessDeniedException('Authentication failure. No PROVISIONER-HMAC was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
     //$hmacValid = $clientHmac == $serverHmac ? null : 'false';

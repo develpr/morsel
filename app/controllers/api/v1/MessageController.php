@@ -4,7 +4,7 @@ namespace Morsel\Api\V1;
 use \Input;
 use \Response;
 
-class MorselController extends \BaseController {
+class MessageController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.

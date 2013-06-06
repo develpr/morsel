@@ -19,6 +19,21 @@ class MessageController extends \BaseController {
 		$this->api = new \ApiConnector();
 	}
 
+	public function index()
+	{
+		/** @var \Illuminate\Http\Request $request */
+		$request = Request::create('/api/v1/messages', 'GET');
+		$this->api->dispatchRequest($request);
+
+		$messages = $this->api->getBody();
+
+		$viewData = array(
+			'messages' => $messages
+		);
+
+		$this->layout->content = View::make('messages.index')->with($viewData);
+	}
+
 	public function show($id)
 	{
 		$message = Message::find($id);

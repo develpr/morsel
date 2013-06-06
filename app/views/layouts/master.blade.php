@@ -32,7 +32,7 @@
         </ul>
         <section class='top-bar-section'>
             <ul class='right'>
-                @if(Auth::check() && !Auth::user()->isAdmin())
+                @if(Auth::check())
                 <li class='divider'></li>
                 <li class='has-dropdown'>
                     <a href='#'>
@@ -46,8 +46,6 @@
                         </li>
                     </ul>
                 </li>
-                @endif
-                @if(Auth::check())
                 <li class='divider'></li>
                 <li>
                     <a href='/logout'>

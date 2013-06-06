@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration {
 			$table->integer('user_id');
 			$table->text('raw');
 			$table->text('morse');
+			$table->text('array');
 			$table->text('text');
 			$table->timestamps();
 		});

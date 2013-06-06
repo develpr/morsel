@@ -48,10 +48,21 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 |
 */
 
+App::error(function(\Symfony\Component\Finder\Exception\AccessDeniedException $exception, $code)
+{
+	$response = array(
+		'error' => true,
+		'http_status' => 401,
+		'errorMessage' => $exception->getMessage()
+	);
+	return Response::json($response, 401);
+});
+
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 });
+
 
 /*
 |--------------------------------------------------------------------------
