@@ -38,30 +38,48 @@ class MessageController extends \BaseController {
 	{
 		$message = Message::find($id);
 
-		$decoder = new Decoder();
+		/** @var \Illuminate\Http\Request $request */
+		$request = Request::create('/api/v1/messages/' . $id, 'GET');
+		$this->api->dispatchRequest($request);
 
-		$decoder->setRawInput($message->raw);
-		$text = $decoder->decode();
+		$message = json_decode($this->api->getBody());
 
-		$times = array();
-		foreach($decoder->getInputArray() as $input)
+		$times = false;
+		foreach($message->array as $input)
 		{
-			$times[] = $input['time'];
+			$times[] = $input->time;
 		}
-
-
 
 		$viewData = array(
 			'message'	=> $message,
-			'text'		=> $text,
-			'rawArray'	=> $decoder->getInputArray(),
 			'times'		=> $times,
-			'averageDit'=> $decoder->getAverageDit(),
-			'averageDah'=> $decoder->getAverageDah(),
-			'longestMidCharacterPause' => $decoder->getLongestMidCharacterPause()
 		);
 
 		$this->layout->content = View::make('messages.show')->with($viewData);
+	}
+
+	public function create()
+	{
+		$this->layout->content = View::make('messages.create');
+	}
+
+	public function store()
+	{
+		$input = array(
+			'text' => Input::get('text')
+		);
+
+		/** @var \Illuminate\Http\Request $request */
+		$request = Request::create('/api/v1/messages', 'POST', $input);
+		$this->api->dispatchRequest($request);
+
+		//A new message was created
+		if($this->api->getStatusCode() == 201)
+		{
+			$message = json_decode($this->api->getBody());
+			return Redirect::to('/messages/' . $message->id);
+		}
+
 	}
 
 

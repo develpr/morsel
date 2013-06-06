@@ -44,10 +44,49 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
-Route::filter('auth.message', function()
+
+/**
+ * 		Check to see if a user has the permissions to view a particular message
+ */
+Route::filter('auth.message', function(Illuminate\Routing\Route $route)
 {
-	if(!Auth::check())
-		throw new AccessDeniedException('Access not found');
+	//We need to:
+	//	1) created by the user or
+	//	2) in the user's transmission queue
+
+	//User needs to be logged in for sure to be able to view any messages, so check that first
+	//Note that the user should be "virtually" signed in if it's a API request authenticated via hmac
+	if(Auth::check())
+	{
+		$user = Auth::user();
+
+		$messageId = $route->getParameter('messages');
+
+		$message = Morsel\Message::find($messageId);
+
+		$blah = $message->user;
+
+		//If this message doesn't exist, we'll let the API deal with this!
+		if(!$message)
+			return null;
+
+		else if($message->user->id == $user->id)
+			return null;
+
+		else
+		{
+			//Else we need to go through the trouble of figuring out whether or not a transmission exists with this user
+			$transmission = Morsel\Transmission::where('message_id', $messageId)->first();
+
+			if(isset($transmission) && $transmission->receiver->id == $user->id)
+				return null;
+		}
+
+	}
+
+	//We made it this far... which is not good for our adventurer
+	throw new AccessDeniedException('Access not found');
+
 });
 
 
@@ -59,7 +98,7 @@ Route::filter('auth.hmac', function()
 
     $body = file_get_contents('php://input');
     $authHeader = Request::header('AUTHORIZATION');
-	$authHeader = split(':',$authHeader);
+	$authHeader = explode(':',$authHeader);
 
 	$userId = $authHeader[0];
 	$signature = $authHeader[1];

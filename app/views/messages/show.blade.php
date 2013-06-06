@@ -30,7 +30,9 @@ Morsel Test
 <div class="row">
 	<div class="large-6 small-12 columns">
 		<span class="bar-graph" >
+			@if($times !== false)
 			<?php echo implode(',',$times); ?>
+			@endif
 		</span>
 	</div>
 	<div class="large-6 small-12 columns panel">
@@ -38,15 +40,7 @@ Morsel Test
 		<table>
 			<tr>
 				<td>Message</td>
-				<td>{{$text}}</td>
-			</tr>
-			<tr>
-				<td>Average .</td>
-				<td>{{$averageDit}}</td>
-			</tr>
-			<tr>
-				<td>Average -</td>
-				<td>{{$averageDah}}</td>
+				<td>{{$message->text}}</td>
 			</tr>
 		</table>
 	</div>

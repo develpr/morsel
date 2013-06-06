@@ -4,6 +4,7 @@
 class ApiConnector{
 
     protected $version = 'v1';
+	/** @var \Illuminate\Http\JsonResponse $response */
     protected $response;
 
     public function dispatchRequest($request)
@@ -27,5 +28,10 @@ class ApiConnector{
     {
         return $this->response->getContent();
     }
+
+	public function getStatusCode()
+	{
+		return $this->getResponse()->getStatusCode();
+	}
 
 }

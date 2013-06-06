@@ -75,5 +75,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Morsel\Message');
 	}
 
+	public function mate()
+	{
+		return $this->hasOne('User');
+	}
+
 
 }

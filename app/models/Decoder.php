@@ -161,7 +161,7 @@ class Decoder extends \Eloquent{
 	{
 		foreach($this->morseMessage as $morseCode)
 		{
-			if(key_exists($morseCode, $this->reverseMorseMap))
+			if(array_key_exists($morseCode, $this->reverseMorseMap))
 				$this->characterMessage .= $this->reverseMorseMap[$morseCode];
 			else
 				$this->characterMessage .= '*';
@@ -252,6 +252,14 @@ class Decoder extends \Eloquent{
 
 		$this->morseMessage = $output;
 	}
+
+	public function getMorse()
+	{
+		$simpleMorse = implode('a', $this->morseMessage);
+
+		return $simpleMorse;
+	}
+
 
 	/**
 	 * Calculate average gaps between beeps and boops and das and dits and pauses

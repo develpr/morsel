@@ -34,6 +34,19 @@
             <ul class='right'>
                 @if(Auth::check())
                 <li class='divider'></li>
+				<li class='has-dropdown'>
+					<a href='/messages'>
+						Messages
+					</a>
+					<ul class='dropdown'>
+						<li>
+							<a href='/messages/create'>
+								Create Message
+							</a>
+						</li>
+					</ul>
+				</li>
+                <li class='divider'></li>
                 <li class='has-dropdown'>
                     <a href='#'>
                         Account

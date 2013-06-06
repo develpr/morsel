@@ -1,23 +1,34 @@
 <?php
 
-class HomeController extends BaseController {
+namespace Morsel;
+use \Request;
+use \Route;
+use \View;
+use \Redirect;
+use \Auth;
+use \Input;
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
+class HomeController extends \BaseController {
 
-	public function showWelcome()
+	protected $api;
+	protected $layout = 'layouts.master';
+
+
+	public function __construct()
 	{
-		return View::make('hello');
+		$this->api = new \ApiConnector();
 	}
+
+
+	public function home()
+	{
+		if(Auth::check())
+		{
+			return Redirect::to('/messages');
+		}
+
+		$this->layout->content = View::make('home');
+	}
+
 
 }

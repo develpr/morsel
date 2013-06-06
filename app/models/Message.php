@@ -35,4 +35,22 @@ class Message extends Eloquent {
         return $this->belongsTo('\User');
     }
 
+	public function transmission()
+	{
+		//Would need to update this relationship to support multiple sending users
+		return $this->hasOne('Morsel\Transmission');
+	}
+
+	//We are going to serialize this array
+	public function setArrayAttribute($value)
+	{
+		$this->attributes['array'] = serialize($value);
+	}
+
+	//We are going to unserialize this array
+	public function getArrayAttribute($value)
+	{
+		return unserialize($value);
+	}
+
 }

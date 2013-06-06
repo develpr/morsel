@@ -12,7 +12,7 @@
 */
 
 // APP TESTING
-Route::get('/', 'Morsel\AppController@home');
+Route::get('/', 'Morsel\HomeController@home');
 Route::get('/messages/{id}/info', 'Morsel\MessageController@show');
 
 /**
@@ -20,6 +20,13 @@ Route::get('/messages/{id}/info', 'Morsel\MessageController@show');
  */
 Route::get('/messages', array('before' => 'auth',
 	'uses' => 'Morsel\MessageController@index'));
+Route::get('/messages/create', array('before' => 'auth',
+	'uses' => 'Morsel\MessageController@create'));
+Route::post('/messages/create', array('before' => 'auth',
+	'uses' => 'Morsel\MessageController@store'));
+Route::get('/messages/{id}', array('before' => 'auth',
+	'uses' => 'Morsel\MessageController@show'));
+
 
 /**
  * APP USERS
@@ -50,13 +57,20 @@ Route::get('/logout', function(){
  */
 
 /*
- *              API - STORES
+ *              API - Messages
  */
 Route::group(array('before' => 'auth.hmac'), function() {
-	//Store resource
 	Route::resource('/api/v1/messages', 'Morsel\Api\V1\MessageController');
 });
+
 /*
- *              API - USERS
+ *              API - Transmissions
+ */
+Route::group(array('before' => 'auth.hmac'), function() {
+	Route::resource('/api/v1/transmissions', 'Morsel\Api\V1\TransmissionController');
+});
+
+/*
+ *              API - Users
  */
 Route::resource('/api/v1/users', 'Morsel\Api\V1\UserController');
