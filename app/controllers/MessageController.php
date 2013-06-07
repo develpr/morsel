@@ -25,7 +25,7 @@ class MessageController extends \BaseController {
 		$request = Request::create('/api/v1/messages', 'GET');
 		$this->api->dispatchRequest($request);
 
-		$messages = $this->api->getBody();
+		$messages = json_decode($this->api->getBody());
 
 		$viewData = array(
 			'messages' => $messages

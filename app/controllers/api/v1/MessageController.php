@@ -2,6 +2,7 @@
 
 namespace Morsel\Api\V1;
 use \Input;
+use \Auth;
 use Morsel\Decoder;
 use Morsel\Encoder;
 use Morsel\Message;
@@ -29,7 +30,18 @@ class MessageController extends \BaseController {
 	public function index()
 	{
 		//
-		$hi = "HI";
+		$limit = 10;
+		$skip = 0;
+		if(Input::has('limit'))
+			$limit = Input::get('limit');
+
+		if(Input::has('skip'))
+			$skip = Input::get('skip');
+
+		$messages = Auth::user()->messages()->orderBy('created_at', 'desc')->skip($skip)->take($limit)->get();
+
+		return Response::json($messages, 200);
+
 	}
 
 	/**
@@ -89,12 +101,12 @@ class MessageController extends \BaseController {
 		$message->morse = $morse;
 		$message->text = $text;
 
-		$user = \Auth::user();
+		$user = Auth::user();
 		$message->user()->associate($user);
 
 		$message->save();
 
-		$mate = \Auth::user()->mate;
+		$mate = Auth::user()->mate;
 
 		//The user has a mate, so we'll add a transmission record for them to pick up
 		if($mate)

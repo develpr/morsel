@@ -28,15 +28,23 @@ Message History
 	</div>
 </div>
 <div class="row">
-	<div class="large-6 small-12 columns">
-		<span class="bar-graph" >
+	@foreach($messages as $message)
+	<div class="large-4 small-12 columns panel">
+		<div class="row">
+			<div class="large-1 small-1 columns">
+				<h3><a href="/messages/{{$message->id}}">{{$message->id}}</a></h3>
+			</div>
+			<div class="large-10 small-10 columns">
+				<div>{{$message->text}}</div>
+				<div>{{str_replace('a',' ',$message->morse)}}</div>
+				<div>{{date("F j, Y g:i a", strtotime($message->created_at))}}</div>
+			</div>
+		</div>
 
-		</span>
 	</div>
-	<div class="large-6 small-12 columns panel">
-
-	</div>
+	@endforeach
 </div>
+
 @stop
 
 @section('scripts')
