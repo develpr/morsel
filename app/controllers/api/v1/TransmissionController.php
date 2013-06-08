@@ -3,8 +3,9 @@
 namespace Morsel\Api\V1;
 use \Input;
 use \Response;
+use \Auth;
 
-class TransmissionsController extends \BaseController {
+class TransmissionController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -13,8 +14,27 @@ class TransmissionsController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
-	}
+        //
+        $limit = 1;
+        $skip = 0;
+
+        if(Input::has('limit'))
+            $limit = Input::get('limit');
+
+        if(Input::has('skip'))
+            $skip = Input::get('skip');
+
+        $query = Auth::user()->receivedTransmissions();
+
+        if(Input::has('received'))
+            $query->where('received', Input::get('received'));
+
+
+        $transmissions = $query->orderBy('created_at', 'desc')->skip($skip)->take($limit)->get();
+
+        return Response::json($transmissions, 200);
+
+    }
 
 	/**
 	 * Show the form for creating a new resource.

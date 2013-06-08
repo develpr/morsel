@@ -1,5 +1,7 @@
 <?php
 
+use \Symfony\Component\Finder\Exception\AccessDeniedException;
+
 /*
 |--------------------------------------------------------------------------
 | Application & Route Filters
@@ -153,7 +155,7 @@ Route::filter('auth.hmac', function()
     if(!$requestSignature)
         throw new AccessDeniedException('Authentication failure. No signature was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
-    $hmacValid = $requestSignature == $computedSignature ? null : 'false';
+    $hmacValid = $requestSignature == $computedSignature ? null : false;
 
     if($hmacValid !== false)
     {
@@ -162,7 +164,7 @@ Route::filter('auth.hmac', function()
     }
     else
     {
-        throw new AccessDeniedException('You need to authenticate before you can use the API. Please be sure you are logged in or have supplied a valid/active PROVISIONER-KEY and PROVISIONER-HMAC.');
+        throw new AccessDeniedException('You need to authenticate before you can use the API. Please be sure you are logged in or have supplied a valid/active Auth header.');
     }
 
 });
