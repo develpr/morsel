@@ -134,8 +134,6 @@ Route::filter('auth.hmac', function()
     $random = '';
     if(Input::has('raw'))
         $random .= Input::get('raw');
-    if(Input::has('rand'))
-        $random .= Input::get('rand');
 
     if(strlen($random) < 5)
         throw new AccessDeniedException('A random string or raw input of at least 5 characters is required for authentication');
