@@ -24,7 +24,7 @@ class TransmissionController extends \BaseController {
         if(Input::has('skip'))
             $skip = Input::get('skip');
 
-        $query = Auth::user()->receivedTransmissions();
+        $query = Auth::user()->receivedTransmissions()->with("Message");
 
         if(Input::has('received'))
             $query->where('received', Input::get('received'));
