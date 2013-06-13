@@ -4,6 +4,9 @@ namespace Morsel\Api\V1;
 use \Input;
 use \Response;
 use \Auth;
+use \DB;
+use Morsel\Message;
+use Morsel\Transmission;
 
 class TransmissionController extends \BaseController {
 
@@ -24,13 +27,24 @@ class TransmissionController extends \BaseController {
         if(Input::has('skip'))
             $skip = Input::get('skip');
 
-        $query = Auth::user()->receivedTransmissions()->with("Message");
+        if(Input::has('direction') && strtolower(Input::get('direction')) == 'sent')
+        {
+            $query = Transmission::where('sender_id', Auth::user()->id);
+        }
+        else if(Input::has('direction') && strtolower(Input::get('direction')) == 'received')
+        {
+            $query = Transmission::where('receiver_id', Auth::user()->id);
+        }
+        else
+        {
+            $query = Transmission::where('receiver_id', Auth::user()->id)->
+                orWhere('sender_id', Auth::user()->id);
+        }
 
         if(Input::has('received'))
             $query->where('received', Input::get('received'));
 
-
-        $transmissions = $query->orderBy('created_at', 'desc')->skip($skip)->take($limit)->get();
+        $transmissions = $query->orderBy('created_at', 'desc')->skip($skip)->take($limit)->with("Message")->get();
 
         return Response::json($transmissions, 200);
 
@@ -64,7 +78,9 @@ class TransmissionController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+        $transmission = Transmission::find($id)->with("Message");
+
+        return Response::json($transmission, 200);
 	}
 
 	/**
