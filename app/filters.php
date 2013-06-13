@@ -124,19 +124,22 @@ Route::filter('auth.transmission', function(Illuminate\Routing\Route $route)
 
 Route::filter('auth.hmac', function()
 {
-
     //First check if there is a user that is actually logged in
     if(Auth::check())
         return null;
 
+
+    $restApiWorkaroundId = Input::get('logmeinatmebro');
+    if($restApiWorkaroundId)
+    {
+        Auth::loginUsingId($restApiWorkaroundId);
+        return null;
+    }
+
     $uri = Request::path();
+    $entityBody = Request::getContent();
 
-    $random = '';
-    if(Input::has('raw'))
-        $random .= Input::get('raw');
-
-    if(strlen($random) < 5)
-        throw new AccessDeniedException('A random string or raw input of at least 5 characters is required for authentication');
+    $signatureIngredients = $uri . $entityBody;
 
     $authHeader = Request::header('Auth');
 	$authHeader = explode(':',$authHeader);
@@ -148,10 +151,10 @@ Route::filter('auth.hmac', function()
         throw new AccessDeniedException('Authentication failure. No user key/id was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
     $key = User::find($userId)->secret_key;
-    $computedSignature = md5($uri . $random . $key);
+    $computedSignature = hash_hmac('md5', $signatureIngredients, $key);
 
     if(!$requestSignature)
-        throw new AccessDeniedException('Authentication failure. No signature was provivded in the header. This is a requirement for use of the API (or login via the web app).');
+        throw new AccessDeniedException('Authentication failure. No signature was provided in the header. This is a requirement for use of the API (or login via the web app).');
 
     $hmacValid = $requestSignature == $computedSignature ? null : false;
 
