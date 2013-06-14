@@ -8,7 +8,7 @@ class UserTableSeeder extends Seeder {
 
         User::create(array(
             'email'         => 'kevin@develpr.com',
-			'user_id'		=> '2',
+			'user_id'		=> '4',
             'username'      => 'kevin',
             'group'         => 'admin',
             'password'      => Hash::make('password'),
@@ -19,7 +19,6 @@ class UserTableSeeder extends Seeder {
 
 		User::create(array(
 			'email'         => 'shoelessone@gmail.com',
-			'user_id'		=> '1',
 			'username'      => 'shoelessone',
 			'group'         => 'admin',
 			'password'      => Hash::make('password'),
@@ -37,6 +36,17 @@ class UserTableSeeder extends Seeder {
 			'last_name'      => 'Mitchell',
 			'secret_key'     => 'sf9k03asgasfk02'
 		));
+
+        User::create(array(
+            'email'         => 'smithnick@gmail.com',
+            'user_id'		=> '1',
+            'username'      => 'nick',
+            'group'         => 'admin',
+            'password'      => Hash::make('password'),
+            'first_name'     => 'Nick',
+            'last_name'      => 'Smith',
+            'secret_key'     => 'sf9k03asgasfk02'
+        ));
     }
 
 }
