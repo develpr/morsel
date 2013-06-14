@@ -41,7 +41,7 @@ class UserController extends \BaseController{
 
 		if (Auth::attempt($user))
 		{
-			return Redirect::to('/messages');
+			return Redirect::to('/transmissions');
 		}
 		else
 		{
