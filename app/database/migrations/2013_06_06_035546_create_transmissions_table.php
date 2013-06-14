@@ -20,6 +20,7 @@ class CreateTransmissionsTable extends Migration {
 			$table->integer('sender_id');
 			$table->boolean('received');
 			$table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

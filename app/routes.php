@@ -18,14 +18,20 @@ Route::get('/messages/{id}/info', 'Morsel\MessageController@show');
 /**
  * APP MESSAGES
  */
-Route::get('/messages', array('before' => 'auth',
-	'uses' => 'Morsel\MessageController@index'));
+//Route::get('/messages', array('before' => 'auth',
+//	'uses' => 'Morsel\MessageController@index'));
 Route::get('/messages/create', array('before' => 'auth',
 	'uses' => 'Morsel\MessageController@create'));
 Route::post('/messages/create', array('before' => 'auth',
 	'uses' => 'Morsel\MessageController@store'));
 Route::get('/messages/{id}', array('before' => 'auth',
 	'uses' => 'Morsel\MessageController@show'));
+
+/**
+ * APP MESSAGES
+ */
+Route::get('/transmissions', array('before' => 'auth',
+    'uses' => 'Morsel\TransmissionController@index'));
 
 
 /**
@@ -70,7 +76,7 @@ Route::group(array('before' => 'auth.hmac'), function() {
 /*
  *              API - Transmissions
  */
-Route::group(array('before' => 'auth.hmac'), function() {
+Route::group(array('before' => 'auth.hmac|auth.transmission'), function() {
 	Route::resource('/api/v1/transmissions', 'Morsel\Api\V1\TransmissionController');
 });
 

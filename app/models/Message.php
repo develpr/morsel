@@ -15,6 +15,7 @@ use \SoapClient;
 class Message extends Eloquent {
 
     protected $table = 'messages';
+    protected $softDelete = true;
 
     //todo: Additional attributes should probably be gaurded at some point
     protected $guarded = array('');

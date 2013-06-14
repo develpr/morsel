@@ -24,7 +24,7 @@ class HomeController extends \BaseController {
 	{
 		if(Auth::check())
 		{
-			return Redirect::to('/messages');
+			return Redirect::to('/transmissions');
 		}
 
 		$this->layout->content = View::make('home');

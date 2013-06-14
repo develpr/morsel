@@ -11,6 +11,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'users';
+    protected $softDelete = true;
 
 	//todo: Additional attributes should probably be gaurded at some point - these can't be set via mass assignment
 	protected $guarded = array('');

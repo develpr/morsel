@@ -102,7 +102,17 @@ class TransmissionController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+        $transmission = Transmission::find($id);
+		//update the transmission
+        if(Input::has('received') and Input::get('received') == true)
+        {
+            $transmission->received = true;
+            $transmission->save();
+            return Response::make(null, 204);
+        }
+
+        return Response::make(null, 304);
+
 	}
 
 	/**
@@ -113,7 +123,12 @@ class TransmissionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		//destroy the transmission
+        $transmission = Transmission::find($id);
+
+        $transmission->delete();
+
+        return Response::make(null, 204);
 	}
 
 }

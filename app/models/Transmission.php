@@ -15,6 +15,7 @@ use \SoapClient;
 class Transmission extends Eloquent {
 
 	protected $table = 'transmissions';
+    protected $softDelete = true;
 
 	//todo: validate this man!
 	public $rules = array(

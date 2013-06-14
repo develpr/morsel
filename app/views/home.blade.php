@@ -5,7 +5,7 @@ Morsel Test
 @section('content')
 <div class="row">
     <div class="large-12 columns">
-        <h1>Morsel Test</h1>
+        <h1>Morsel API</h1>
     </div>
 </div>
 

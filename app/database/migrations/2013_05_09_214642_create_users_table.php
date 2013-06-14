@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration {
             $table->string('last_name', 30);
             $table->string('secret_key', 100); //For API authentication
             $table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

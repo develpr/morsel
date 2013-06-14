@@ -17,7 +17,7 @@
             <li class='name'>
                 <h1>
                     <a href='/'>
-                        <img class='left securebuy-logo' src='/images/morsel_logo.png' />
+                        <img class='left morsel-logo' src='/images/morsel_logo.png' />
                         <span class="morsel-logo">&nbsp;Morsel</span>
                     </a>
                 </h1>
@@ -35,10 +35,15 @@
                 @if(Auth::check())
                 <li class='divider'></li>
 				<li class='has-dropdown'>
-					<a href='/messages'>
+					<a href='/transmissions'>
 						Messages
 					</a>
 					<ul class='dropdown'>
+                        <li>
+                            <a href='/transmissions'>
+                                Transmission History
+                            </a>
+                        </li>
 						<li>
 							<a href='/messages/create'>
 								Create Message
