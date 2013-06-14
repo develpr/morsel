@@ -6,31 +6,17 @@ Morsel Test
 <div class="row">
     <div class="large-12 columns">
         <h1>Morsel API</h1>
+        <h6></h6>
     </div>
 </div>
 
 <div class="row">
-    <div class="large-12 columns">
-        @if($errors->any())
-            @foreach($errors->getMessages() as $message)
-                <div data-alert class="alert-box alert">
-                    {{$message[0]}}
-                    <a href="#" class="close">&times;</a>
-                </div>
-
-            @endforeach
-        @elseif(Session::get('message'))
-        <div data-alert class="alert-box success">
-            {{Session::get('message')}}
-            <a href="#" class="close">&times;</a>
-        </div>
-        @endif
-    </div>
-</div>
-<div class="row">
-    <div class="large-6 small-12 columns">
+    <div class="large-12 small-12 columns">
+        <h2>
+            What is Morsel?
+        </h2>
     	<p>
-			You can login, or you can not login. Or, for now, you can try something like
+
     	</p>
 		<p>
 			<a href="/messages/1/info" >View Message 1</a>

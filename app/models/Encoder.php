@@ -119,17 +119,73 @@ class Encoder extends \Eloquent{
 	public function _translateMorseToDitsAndDahs()
 	{
 		$this->inputRaw = 'a0b291a1b300a0b93a1b341a0b223';
-		return;
+        $raw = '';
+
 		$morseMessage = '';
 		foreach($this->morseMessage as $character)
 		{
-			$morseMessage[] = $this->forwardMorseMap[$character];
+
+            $individualCharacters = str_split($character);
+            $count = 0;
+            foreach($individualCharacters as $character)
+            {
+                $count++;
+
+                if($character == ".")
+                    $raw .= "a0b" . $this->getAverageDit();
+                else
+                    $raw .= "a0b" . $this->getAverageDah();
+
+                if($count < count($individualCharacters))
+                    $raw .= "a1b" . $this->getAverageDit();
+            }
+
+            $raw .= "a1b" . $this->getAverageDah();
 		}
 
-		$this->morseMessage = $morseMessage;
+        $this->inputRaw = $raw;
+
+        $this->inputArray = $this->_parseInput($raw);
 	}
 
-	public function getRaw()
+    /**
+     *	Convert raw string to an array
+     *
+     * 	NOTE: 'key' refers to the position of the straight key:
+     * 		false or 0 means that the key is pressed
+     * 		true or 1 means that the key is depressed/not pressed
+     *
+     * @param string $rawInput
+     */
+    protected function _parseInput($rawInput)
+    {
+        $final = array();
+
+        //Here is a temp array - we will need to further split these all by
+        //todo: probably some magic php method that will do this, or regex perhaps, but it's the weekend
+        $tempArray = explode('a', $rawInput);
+        //$tempArray = preg_split("/((\r?\n)|(\r\n?))/", $rawInput);
+
+        foreach($tempArray as $part)
+        {
+            //Here we have a string of the form 0,123 so we need to further break it down
+            $tempValue = explode('b', $part);
+
+            //In some cases, in particular the edge case at the end of input, we may have an incomplete pair
+            if(array_key_exists(1, $tempValue))
+            {
+                $final[] = array(
+                    'key' 	=> (boolean)$tempValue[0],
+                    'time'	=> $tempValue[1]
+                );
+            }
+        }
+
+        return $final;
+    }
+
+
+    public function getRaw()
 	{
 		return $this->inputRaw;
 	}
