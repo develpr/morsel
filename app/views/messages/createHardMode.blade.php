@@ -33,12 +33,17 @@ Create a Message
         <p>
             When you are done, click submit, and your message will be transmitted and decoded.
         </p>
-        <div id="key" style="width:100%; height:20em; background-color:#444;"></div>
     </div>
 </div>
 <div class="row">
     <div class="large-12 small-12 columns">
         <form action="/messages/create" method="post" name="create-message">
+			<div class="row">
+				<div class="large-12 small-12 columns">
+					<input class="button small expand" style="margin-bottom:0;" type="submit" value="Send" />
+				</div>
+			</div>
+			<div id="key" style="width:100%; height:20em; background-color:#444;"></div>
             <input type="hidden" name="raw" id="raw" />
             <div class="row">
                 <div class="large-12 small-12 columns">
