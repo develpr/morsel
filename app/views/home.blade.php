@@ -130,10 +130,16 @@ curl_close($ch);
 @section('scripts')
 <script type="text/javascript" src="{{URL::to('javascripts/vendor/jquery.snippet.min.js')}}"></script>
 <script>
+	<?php //todo: need to update the snippet library once it's fixed the $.browser bug in Chrome ?>
 	$(function(){
-	$("pre.js").snippet("javascript",{style:"acid",transparent:false,showNum:false});
-	$("pre.php").snippet("php",{style:"acid" +
-		"",transparent:false,showNum:true});
+		$('.morsel').hover(function(){
+			$(this).html('-- --- .-. ... . .-..');
+		}, function(){
+			$(this).html('Morsel');
+		});
+		$("pre.js").snippet("javascript",{style:"acid",transparent:false,showNum:false});
+		$("pre.php").snippet("php",{style:"acid" +
+			"",transparent:false,showNum:true});
 	});
 
 </script>
