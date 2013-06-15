@@ -23,6 +23,16 @@ Create a Message
 </div>
 <div class="row">
     <div class="large-12 small-12 columns">
+        <h4>
+            everybody tap your message
+        </h4>
+        <p>
+            <small>(to the turn of the <strong>Cha Cha Slide</strong>)</small>
+        </p>
+        <blockquote>tap tap tap tap tap tap tap tap tap tap tap tap tap tap tap<cite>DJ Casper</cite></blockquote>
+        <p>
+            When you are done, click submit, and your message will be transmitted and decoded.
+        </p>
         <div id="key" style="width:100%; height:20em; background-color:#444;"></div>
     </div>
 </div>
@@ -31,7 +41,7 @@ Create a Message
         <form action="/messages/create" method="post" name="create-message">
             <input type="hidden" name="raw" id="raw" />
             <div class="row">
-                <div class="large-4 small-12 columns">
+                <div class="large-12 small-12 columns">
                     <input class="button small expand" type="submit" value="Send" />
                 </div>
             </div>
