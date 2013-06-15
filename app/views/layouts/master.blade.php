@@ -18,7 +18,7 @@
                 <h1>
                     <a href='/'>
                         <img class='left morsel-logo' src='/images/morsel_logo.png' />
-                        <span class="morsel-logo">&nbsp;Morsel</span>
+                        <span class="morsel">&nbsp;Morsel</span>
                     </a>
                 </h1>
             </li>
@@ -119,7 +119,7 @@
 </script>
 <script>
 	$(function(){
-		$('.morsel-logo').hover(function(){
+		$('.morsel').hover(function(){
 			$(this).html('-- --- .-. ... . .-..');
 		}, function(){
 			$(this).html('Morsel');
