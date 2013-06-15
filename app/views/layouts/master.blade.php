@@ -46,9 +46,14 @@
                         </li>
 						<li>
 							<a href='/messages/create'>
-								Create Message
+								New Message (easy mode)
 							</a>
 						</li>
+                        <li>
+                            <a href='/messages/create-hard-mode'>
+                                New Message (hard mode)
+                            </a>
+                        </li>
 					</ul>
 				</li>
                 <li class='divider'></li>

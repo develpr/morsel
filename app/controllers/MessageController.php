@@ -51,11 +51,20 @@ class MessageController extends \BaseController {
 		$this->layout->content = View::make('messages.create');
 	}
 
+	public function createHard()
+	{
+		$this->layout->content = View::make('messages.createHardMode');
+	}
+
 	public function store()
 	{
-		$input = array(
-			'text' => Input::get('text')
-		);
+        $input = array();
+
+        if(Input::has('text'))
+            $input['text'] = Input::get('text');
+
+        else if(Input::has('raw'))
+            $input['raw'] = Input::get('raw');
 
 		/** @var \Illuminate\Http\Request $request */
 		$request = Request::create('/api/v1/messages', 'POST', $input);

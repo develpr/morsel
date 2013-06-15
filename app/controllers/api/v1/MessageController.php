@@ -91,7 +91,7 @@ class MessageController extends \BaseController {
 			$morse = $encoder->getMorse();
 			$text = Input::get('text');
 			$raw = $encoder->getRaw();
-			$array = array(); //todo: do we care about encoding this?
+			$array = $encoder->getInputArray();
 		}
 
 		$message = new Message();

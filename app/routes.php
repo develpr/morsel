@@ -22,6 +22,8 @@ Route::get('/messages/{id}/info', 'Morsel\MessageController@show');
 //	'uses' => 'Morsel\MessageController@index'));
 Route::get('/messages/create', array('before' => 'auth',
 	'uses' => 'Morsel\MessageController@create'));
+Route::get('/messages/create-hard-mode', array('before' => 'auth',
+	'uses' => 'Morsel\MessageController@createHard'));
 Route::post('/messages/create', array('before' => 'auth',
 	'uses' => 'Morsel\MessageController@store'));
 Route::get('/messages/{id}', array('before' => 'auth',
