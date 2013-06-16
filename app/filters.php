@@ -144,6 +144,9 @@ Route::filter('auth.hmac', function()
     $authHeader = Request::header('Auth');
 	$authHeader = explode(':',$authHeader);
 
+	if(length($authHeader) < 2)
+		throw new AccessDeniedException('Authentication failure. An invalid Auth header was provided.');
+
 	$userId = $authHeader[0];
 	$requestSignature = $authHeader[1];
 
