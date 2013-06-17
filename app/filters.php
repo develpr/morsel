@@ -128,7 +128,6 @@ Route::filter('auth.hmac', function()
     if(Auth::check())
         return null;
 
-
     $restApiWorkaroundId = Input::get('logmeinatmebro');
     if($restApiWorkaroundId)
     {
@@ -136,12 +135,16 @@ Route::filter('auth.hmac', function()
         return null;
     }
 
-    $uri = Request::path();
+    $uri = Request::fullUrl();
     $entityBody = Request::getContent();
 
     $signatureIngredients = $uri . $entityBody;
 
     $authHeader = Request::header('Auth');
+
+	if(!$authHeader)
+		throw new AccessDeniedException('Authentication failure. An invalid Auth header was provided.');
+
 	$authHeader = explode(':',$authHeader);
 
 	if(sizeof($authHeader) != 2)
