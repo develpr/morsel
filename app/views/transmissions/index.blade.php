@@ -29,6 +29,46 @@ Message Transmission History
 </div>
 <div class="row">
     <div class="large-6 small-12 columns">
+        <h5>Received Messages</h5>
+        @foreach($transmissions as $transmission)
+        @if($transmission->receiver_id === Auth::user()->id)
+        <div class="large-12 small-12 columns panel received">
+            <div class="row">
+                <div class="large-1 small-1 columns">
+                    <h3><a href="/messages/{{$transmission->message->id}}">{{$transmission->message->id}}</a></h3>
+                </div>
+                <div class="large-9 small-9 columns">
+                    <h6>{{$transmission->message->text}} <small>{{str_replace('a',' ',$transmission->message->morse)}}</small></h6>
+                    <div>{{date("F j, Y g:i a", strtotime($transmission->message->created_at))}}</div>
+                </div>
+                <div class="large-2 small-2 columns">
+                    @if($transmission->received == true)
+                    <i class="general foundicon-smiley"></i>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="large-12 small-12 columns panel received" style="visibility:hidden;">
+            <div class="row">
+                <div class="large-1 small-1 columns">
+                    <h3><a href="/messages/{{$transmission->message->id}}">{{$transmission->message->id}}</a></h3>
+                </div>
+                <div class="large-9 small-9 columns">
+                    <h6>{{$transmission->message->text}} <small>{{str_replace('a',' ',$transmission->message->morse)}}</small></h6>
+                    <div>{{date("F j, Y g:i a", strtotime($transmission->message->created_at))}}</div>
+                </div>
+                <div class="large-2 small-2 columns">
+                    @if($transmission->received == true)
+                    <i class="general foundicon-smiley"></i>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+        @endforeach
+    </div>
+    <div class="large-6 small-12 columns">
         <h5>Sent Messages</h5>
         @foreach($transmissions as $transmission)
             @if($transmission->sender_id == Auth::user()->id)
@@ -48,14 +88,8 @@ Message Transmission History
                     </div>
                 </div>
             </div>
-            @endif
-        @endforeach
-    </div>
-    <div class="large-6 small-12 columns">
-        <h5>Received Messages</h5>
-        @foreach($transmissions as $transmission)
-            @if($transmission->receiver_id === Auth::user()->id)
-            <div class="large-12 small-12 columns panel received">
+            @else
+            <div class="large-12 small-12 columns panel sent" style="visibility:hidden;">
                 <div class="row">
                     <div class="large-1 small-1 columns">
                         <h3><a href="/messages/{{$transmission->message->id}}">{{$transmission->message->id}}</a></h3>
@@ -73,7 +107,7 @@ Message Transmission History
             </div>
             @endif
         @endforeach
-    </div>	
+    </div>
 </div>
 
 @stop
