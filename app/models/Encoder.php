@@ -38,7 +38,7 @@ class Encoder extends \Eloquent{
 	public function __construct()
 	{
 		$this->forwardMorseMap = array(
-			' ' => '-------',
+			' ' => '.......',
 			'A' => '.-',
 			'B' => '-...',
 			'C' => '-.-.',
