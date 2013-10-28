@@ -38,6 +38,7 @@ class Encoder extends \Eloquent{
 	public function __construct()
 	{
 		$this->forwardMorseMap = array(
+			' ' => '-------',
 			'A' => '.-',
 			'B' => '-...',
 			'C' => '-.-.',
@@ -227,7 +228,8 @@ class Encoder extends \Eloquent{
 		$morseMessage = array();
 		foreach(str_split($this->characterMessage) as $character)
 		{
-			$morseMessage[] = $this->forwardMorseMap[strtoupper($character)];
+			if(array_key_exists(strtoupper($character), $this->forwardMorseMap))
+				$morseMessage[] = $this->forwardMorseMap[strtoupper($character)];
 		}
 
 		$this->morseMessage = $morseMessage;

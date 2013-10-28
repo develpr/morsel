@@ -86,10 +86,11 @@ class MessageController extends \BaseController {
 			$method = 'text';
 
 			$encoder = new Encoder();
-			$encoder->setTextMessage(Input::get('text'));
+			$text = strtoupper(Input::get('text'));
+			$encoder->setTextMessage($text);
 			$encoder->encode();
 			$morse = $encoder->getMorse();
-			$text = Input::get('text');
+
 			$raw = $encoder->getRaw();
 			$array = $encoder->getInputArray();
 		}
