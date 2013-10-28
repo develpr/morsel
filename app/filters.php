@@ -128,13 +128,6 @@ Route::filter('auth.hmac', function()
     if(Auth::check())
         return null;
 
-    $restApiWorkaroundId = Input::get('logmeinatmebro');
-    if($restApiWorkaroundId)
-    {
-        Auth::loginUsingId($restApiWorkaroundId);
-        return null;
-    }
-
     $uri = Request::fullUrl();
     $entityBody = Request::getContent();
 
@@ -156,7 +149,7 @@ Route::filter('auth.hmac', function()
     if(!$userId)
         throw new AccessDeniedException('Authentication failure. No user key/id was provivded in the header. This is a requirement for use of the API (or login via the web app).');
 
-    $key = User::find($userId)->secret_key;
+    $key = Crypt::decrypt(User::find($userId)->secret_key);
     $computedSignature = hash_hmac('md5', $signatureIngredients, $key);
 
     if(!$requestSignature)

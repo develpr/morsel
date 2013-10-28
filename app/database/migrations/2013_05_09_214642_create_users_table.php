@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration {
             $table->string('password', 60);
             $table->string('first_name', 30);
             $table->string('last_name', 30);
-            $table->string('secret_key', 100); //For API authentication
+            $table->string('secret_key', 255); //For API authentication
             $table->timestamps();
             $table->softDeletes();
 		});

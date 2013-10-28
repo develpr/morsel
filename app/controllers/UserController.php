@@ -45,7 +45,7 @@ class UserController extends \BaseController{
 		}
 		else
 		{
-			return Redirect::to('/account');
+			return Redirect::to('/account')->with(array('message' => 'Incorrect username/password combination'));;
 		}
 	}
 

@@ -58,6 +58,19 @@ My Account
                     </div>
                 </div>
             </fieldset>
+			<fieldset>
+				<legend>API Access Info</legend>
+				<div class="row">
+					<div class="large-12 small-12 columns">
+						<label>API ID</label>
+						<div class="subheader">{{Auth::user()->id}}</div>
+					</div>
+					<div class="large-12 small-12 columns">
+						<label>API Secret</label>
+						<div class="subheader">{{Crypt::decrypt(Auth::user()->secret_key)}}</div>
+					</div>
+				</div>
+			</fieldset>
             <div class="row">
                 <div class="large-4 small-12 columns">
                     <input class="button small expand" type="submit" value="Save" />

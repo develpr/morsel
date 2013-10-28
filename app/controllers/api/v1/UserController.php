@@ -6,6 +6,7 @@ use \Response;
 use \User;
 use \Auth;
 use \Hash;
+use \Crypt;
 
 class UserController extends \BaseController {
 
@@ -139,7 +140,7 @@ class UserController extends \BaseController {
 
 			$secretKey = Hash::make($user->password . time() . "heywhatsgoingon?");
 			$secretKey = substr($secretKey, 0, strlen($secretKey));
-			$user->secret_key = $secretKey; //todo: encrypt this
+			$user->secret_key = Crypt::encrypt($secretKey); //todo: encrypt this
 			unset($user->pass);
 			unset($user->_method);
 			unset($user->username);
