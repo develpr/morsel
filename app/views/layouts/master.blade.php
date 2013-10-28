@@ -96,6 +96,8 @@
 
 @yield('content')
 
+</section>
+
 <footer></footer>
 <script type='text/javascript'>
     //<![CDATA[
@@ -126,5 +128,6 @@
 		})
 	});
 </script>
+
 </body>
 </html>
