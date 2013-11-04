@@ -202,18 +202,18 @@ class Encoder extends \Eloquent{
 	public function getAverageDit()
 	{
 		//We are faking this, because it is fake!
-		return '100';
+		return '1';
 	}
 
 	public function getAverageDah()
 	{
 		//Faking this!
-		return '300';
+		return '3';
 	}
 
 	public function getLongestMidCharacterPause()
 	{
-		return '100';
+		return '1';
 	}
 
 
