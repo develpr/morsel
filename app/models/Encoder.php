@@ -38,7 +38,7 @@ class Encoder extends \Eloquent{
 	public function __construct()
 	{
 		$this->forwardMorseMap = array(
-			' ' => '.......',
+			' ' => ' ',
 			'A' => '.-',
 			'B' => '-...',
 			'C' => '-.-.',
@@ -119,10 +119,8 @@ class Encoder extends \Eloquent{
 
 	public function _translateMorseToDitsAndDahs()
 	{
-		$this->inputRaw = 'a0b291a1b300a0b93a1b341a0b223';
-        $raw = '';
+		$raw = '';
 
-		$morseMessage = '';
 		foreach($this->morseMessage as $character)
 		{
 
@@ -134,14 +132,17 @@ class Encoder extends \Eloquent{
 
                 if($character == ".")
                     $raw .= "a0b" . $this->getAverageDit();
-                else
+                else if($character == "-")
                     $raw .= "a0b" . $this->getAverageDah();
 
                 if($count < count($individualCharacters))
                     $raw .= "a1b" . $this->getAverageDit();
             }
 
-            $raw .= "a1b" . $this->getAverageDah();
+			if($character == " ")
+				$raw .= "a1b" . $this->getAverageSpace();
+			else
+            	$raw .= "a1b" . $this->getAverageDah();
 		}
 
         $this->inputRaw = $raw;
@@ -202,18 +203,23 @@ class Encoder extends \Eloquent{
 	public function getAverageDit()
 	{
 		//We are faking this, because it is fake!
-		return '10';
+		return '1';
 	}
 
 	public function getAverageDah()
 	{
 		//Faking this!
-		return '30';
+		return '3';
+	}
+
+	public function getAverageSpace()
+	{
+		return "7";
 	}
 
 	public function getLongestMidCharacterPause()
 	{
-		return '10';
+		return '1';
 	}
 
 
