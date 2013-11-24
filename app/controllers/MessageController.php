@@ -61,7 +61,13 @@ class MessageController extends \BaseController {
         $input = array();
 
         if(Input::has('text'))
+		{
+			if(strlen(Input::get('text')) > 70){
+				return Redirect::to('/messages/create')->withErrors(array('test' => "Messages can't be any longer then 70 characters!"));
+			}
+
             $input['text'] = Input::get('text');
+		}
 
         else if(Input::has('raw'))
             $input['raw'] = Input::get('raw');
