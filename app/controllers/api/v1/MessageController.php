@@ -107,15 +107,13 @@ class MessageController extends \BaseController {
 
 		$message->save();
 
-		$mate = Auth::user()->mate;
-
 		//The user has a mate, so we'll add a transmission record for them to pick up
-		if($mate)
+		foreach(Auth::user()->recipients as $recipient)
 		{
 			$transmission = new Transmission();
 			$transmission->message()->associate($message);
 			$transmission->sender()->associate($user);
-			$transmission->receiver()->associate($mate);
+			$transmission->receiver()->associate($recipient);
 			$transmission->save();
 		}
 
