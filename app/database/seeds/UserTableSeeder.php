@@ -6,16 +6,6 @@ class UserTableSeeder extends Seeder {
     {
         DB::table('users')->delete();
 
-        User::create(array(
-            'email'         => 'kevin@develpr.com',
-            'username'      => 'kev',
-            'group'         => 'admin',
-            'password'      => Hash::make('password'),
-            'first_name'     => 'Kevin',
-            'last_name'      => 'Mitchell',
-            'secret_key'     => Crypt::encrypt('5623-1325-3124-5341')
-        ));
-
 		User::create(array(
 			'email'         => 'family@develpr.com',
 			'username'      => 'mitchells',
@@ -25,6 +15,16 @@ class UserTableSeeder extends Seeder {
 			'last_name'      => 'Morsel',
 			'secret_key'     => Crypt::encrypt('5623-1325-3124-5341')
 		));
+
+        User::create(array(
+            'email'         => 'kevin@develpr.com',
+            'username'      => 'kev',
+            'group'         => 'admin',
+            'password'      => Hash::make('password'),
+            'first_name'     => 'Kevin',
+            'last_name'      => 'Mitchell',
+            'secret_key'     => Crypt::encrypt('5623-1325-3124-5341')
+        ));
 
 		User::create(array(
 			'email'         => 'antheamm@umich.edu',
