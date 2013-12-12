@@ -87,3 +87,7 @@ img.morsel-logo {
 .recipient-search-results li{
 	list-style: none;
 }
+
+.panel.sent i, .panel.received i{
+	font-size:2.5em;
+}
