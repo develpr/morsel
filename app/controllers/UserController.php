@@ -45,7 +45,9 @@ class UserController extends \BaseController{
 		}
 		else
 		{
-			return Redirect::to('/account')->with(array('message' => 'Incorrect username/password combination'));;
+            $messages = new \Illuminate\Support\MessageBag;
+            $messages->add('Bad Username/Password', 'Incorrect username/password combination');
+			return Redirect::to('/account')->withErrors($messages);
 		}
 	}
 
