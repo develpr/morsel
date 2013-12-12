@@ -181,4 +181,8 @@ return array(
 
 	),
 
+	'current_api_version' => 'v1',
+
+	'api_path' => 'api',
+
 );

@@ -1,18 +1,43 @@
-/* line 3, main.css.scss */
-.spacer {
-  margin: emCalc(30px) auto; }
+.recipients .remove  a{
+	color:black;
+}
 
-/* line 7, main.css.scss */
-img.securebuy-logo {
-  width: 24px;
-  position: relative;
-  top: 9px;
-  left: -3px; }
 
-/* line 15, main.css.scss */
-table.provisioner th {
-  font-size: emCalc(17px); }
-/* line 18, main.css.scss */
-table.provisioner i {
-  position: relative;
-  top: 2px; }
+
+img.morsel-logo {
+	width: 24px;
+	position: relative;
+	top: 9px;
+	left: -3px; }
+
+
+.panel.sent {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #cfffd1;
+	margin-bottom: 1.25rem;
+	padding: 1.25rem;
+	background: #e6ffde; }
+.panel.callout > :first-child {
+	margin-top: 0; }
+.panel.callout > :last-child {
+	margin-bottom: 0; }
+.panel.callout h1, .panel.callout h2, .panel.callout h3, .panel.callout h4, .panel.callout h5, .panel.callout h6, .panel.callout p {
+	color: #333333; }
+.panel.callout h1, .panel.callout h2, .panel.callout h3, .panel.callout h4, .panel.callout h5, .panel.callout h6 {
+	line-height: 1;
+	margin-bottom: 0.625rem; }
+.panel.callout h1.subheader, .panel.callout h2.subheader, .panel.callout h3.subheader, .panel.callout h4.subheader, .panel.callout h5.subheader, .panel.callout h6.subheader {
+	line-height: 1.4; }
+.panel.callout a {
+	color: #008cba; }
+
+/*.recipients .remove.panel:hover{*/
+	/*border-color: rgba(225, 0, 4, 0.35);*/
+	/*background: #c8afac;*/
+/*}*/
+
+
+.recipient-search-results li{
+	list-style: none;
+}

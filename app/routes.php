@@ -11,6 +11,27 @@
 |
 */
 
+Route::get('/ok', function(){
+	$api = new \ApiConnector();
+	$input = array('text' => 'blah');
+	$request = Request::create('/api/v1/messages', 'POST', $input);
+	$api->dispatchRequest($request);
+});
+
+Route::get('/blah', function(){
+	$user = User::find(2);
+	$user->recipients()->attach(1);
+});
+
+Route::get('/lol', function(){
+	$user = User::find(2);
+
+	$test = $user->recipients()->where('');
+	var_dump($test);
+});
+
+Route::get('/relationships', 'Morsel\UserController@relationships');
+
 // APP TESTING
 Route::get('/', 'Morsel\HomeController@home');
 Route::get('/messages/{id}/info', 'Morsel\MessageController@show');
@@ -86,3 +107,17 @@ Route::group(array('before' => 'auth.hmac|auth.transmission'), function() {
  *              API - Users
  */
 Route::resource('/api/v1/users', 'Morsel\Api\V1\UserController');
+
+/*
+ *				API - Recipients
+ */
+Route::group(array('before' => 'auth.hmac'), function() {
+	Route::resource('/api/v1/recipients', 'Morsel\Api\V1\RecipientController');
+});
+
+/*
+ *				API - Senders
+ */
+Route::group(array('before' => 'auth.hmac'), function() {
+	Route::resource('/api/v1/senders', 'Morsel\Api\V1\SenderController');
+});

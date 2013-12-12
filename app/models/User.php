@@ -96,5 +96,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('User', 'recipient_sender', 'sender_id', 'recipient_id');
 	}
 
+	public function isAdmin()
+	{
+		return $this->group == 'admin';
+	}
+
+	public function getPublicInfo()
+	{
+		return array(
+			'first_name' => $this->first_name,
+			'last_name' => $this->last_name,
+			'username' => $this->username,
+			'id' => $this->id,
+		);
+	}
 
 }
