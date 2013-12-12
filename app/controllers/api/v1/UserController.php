@@ -38,7 +38,19 @@ class UserController extends \BaseController {
 		if(Input::has('offset'))
 			$offset = Input::get('offset');
 
-		$users = User::where('id', '>', 0)->skip($offset)->take($limit)->get();
+		$users = User::where('id', '>', 0)->skip($offset)->take($limit);
+
+		if(!Input::has('username') && !Auth::user()->isAdmin())
+			$users->where('id', '=', Auth::user()->id);
+		else if(Input::has('username'))
+			$users->where('username', '=', trim(Input::get('username')));
+
+		//If the user is looking for a user based on username and if they are not themselves an admin, then only return
+		//the data the we've deemed OK for them to view
+		if(Input::has('username') && !Auth::user()->isAdmin())
+			$users = array($users->first()->getPublicInfo());
+		else
+			$users = $users->get();
 
 		return Response::json($users);
 	}
@@ -95,8 +107,14 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(User $user)
+	public function show($id)
 	{
+		/** @var User $user */
+		$user = User::findOrFail($id);
+
+		if(Auth::user()->id != $user->id && !Auth::user()->isAdmin())
+			return Response::json($user->getPublicInfo());
+
 		return Response::json($user);
 	}
 
@@ -106,8 +124,10 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(User $user)
+	public function update($id)
 	{
+		$user = User::findOrFail($id);
+
 		$user->fill(Input::all());
 
 		if(Input::has('pass') && strlen(Input::get('pass') > 1))
@@ -115,9 +135,6 @@ class UserController extends \BaseController {
 			$user->rules['pass'] = 'required|min:6|confirmed'; //we need to confirm the password
 			$user->password = Hash::make($user->pass);
 		}
-
-
-
 
 		$user->rules['email'] = $user->rules['email'] . ',' . $user->id;
 		$user->rules['username'] = $user->rules['username'] . ',' . $user->id;
