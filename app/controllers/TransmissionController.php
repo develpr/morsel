@@ -22,7 +22,7 @@ class TransmissionController extends \BaseController {
     public function index()
     {
         /** @var \Illuminate\Http\Request $request */
-        $request = Request::create('/api/v1/transmissions?limit=20', 'GET');
+        $request = Request::create('/api/v1/transmissions?limit=20&order=desc', 'GET');
         $this->api->dispatchRequest($request);
 
         $transmissions = json_decode($this->api->getBody());

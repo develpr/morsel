@@ -41,10 +41,15 @@ class TransmissionController extends \BaseController {
                 orWhere('sender_id', Auth::user()->id);
         }
 
+		$sortOrder = 'asc';
+
+		if(Input::has('order') && strtolower(Input::get('order')) == 'desc')
+			$sortOrder = 'desc';
+
         if(Input::has('received'))
             $query->where('received', Input::get('received'));
 
-        $transmissions = $query->orderBy('created_at', 'desc')->skip($skip)->take($limit)->with("Message")->get();
+        $transmissions = $query->orderBy('created_at', $sortOrder)->skip($skip)->take($limit)->with("Message")->get();
 
         return Response::json($transmissions, 200);
 
