@@ -83,9 +83,10 @@ class UserController extends \BaseController {
 		{
 			$user->password = Hash::make($user->pass);
 
-			$secretKey = Hash::make($user->password . time() . "heywhatsgoingon?");
-			$secretKey = substr($secretKey, 0, strlen($secretKey));
-			$user->secret_key = $secretKey; //todo: encrypt this
+			$secretKey = Hash::make(str_random(8) . $user->password . time() . "heywhatsgoingon?");
+            $secretKey = substr($secretKey, 10);
+            $secretKey = substr($secretKey, 0, 4) . '-' . substr($secretKey, 4, 4) . '-' . substr($secretKey, 8, 4) . '-' . substr($secretKey, 12, 4);
+            $user->secret_key = Crypt::encrypt($secretKey); //todo: encrypt this
 			unset($user->pass);
 			unset($user->pass_confirmation);
 			$user->save();
@@ -133,7 +134,6 @@ class UserController extends \BaseController {
 		if(Input::has('pass') && strlen(Input::get('pass') > 1))
 		{
 			$user->rules['pass'] = 'required|min:6|confirmed'; //we need to confirm the password
-			$user->password = Hash::make($user->pass);
 		}
 
 		$user->rules['email'] = $user->rules['email'] . ',' . $user->id;
@@ -153,11 +153,9 @@ class UserController extends \BaseController {
 		}
 		else
 		{
-			$user->password = Hash::make($user->pass);
+            if(Input::has('pass') && strlen(Input::get('pass') > 1))
+			    $user->password = Hash::make($user->pass);
 
-			$secretKey = Hash::make($user->password . time() . "heywhatsgoingon?");
-			$secretKey = substr($secretKey, 0, strlen($secretKey));
-			$user->secret_key = Crypt::encrypt($secretKey); //todo: encrypt this
 			unset($user->pass);
 			unset($user->_method);
 			unset($user->username);
