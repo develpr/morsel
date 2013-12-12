@@ -43,7 +43,7 @@ Message Transmission History
                 </div>
                 <div class="large-2 small-2 columns">
                     @if($transmission->received == true)
-                    <i class="general foundicon-smiley"></i>
+                    <i class="general fi-check"></i>
                     @endif
                 </div>
             </div>
