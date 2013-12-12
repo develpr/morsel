@@ -120,4 +120,14 @@ class UserController extends \BaseController{
 		$result = $response->getContent();
 	}
 
+	public function relationships()
+	{
+		$request = Request::create('/api/v1/recipients', 'GET');
+		$this->api->dispatchRequest($request);
+
+		$recipients = json_decode($this->api->getBody());
+
+		$this->layout->content = View::make('account.relationships')->with(array('recipients' => $recipients));
+	}
+
 }
