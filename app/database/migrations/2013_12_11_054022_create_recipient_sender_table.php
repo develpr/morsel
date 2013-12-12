@@ -18,6 +18,7 @@ class CreateRecipientSenderTable extends Migration {
 			$table->integer('recipient_id');
 			$table->integer('sender_id');
 			$table->timestamps();
+			$table->unique(array('recipient_id', 'sender_id'));
 
 		});
 	}
@@ -29,7 +30,7 @@ class CreateRecipientSenderTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('recipient_sender');
 	}
 
 }
