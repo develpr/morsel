@@ -52,6 +52,13 @@ class RecipientController extends \BaseController{
 
 	}
 
+	/**
+	 * Unlink a recipient
+	 *
+	 * @param $id
+	 * @return mixed
+	 * @throws \Symfony\Component\Finder\Exception\OperationNotPermitedException
+	 */
 	public function destroy($id)
 	{
 		$user = $this->getUserFromScope();
