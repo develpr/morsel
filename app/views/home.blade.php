@@ -128,7 +128,7 @@ curl_close($ch);
 @stop
 
 @section('scripts')
-<script type="text/javascript" src="{{URL::to('javascripts/vendor/jquery.snippet.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('js/vendor/jquery.snippet.min.js')}}"></script>
 <script>
 	<?php //todo: need to update the snippet library once it's fixed the $.browser bug in Chrome ?>
 	$(function(){

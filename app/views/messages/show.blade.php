@@ -48,7 +48,7 @@ Morsel Test
 @stop
 
 @section('scripts')
-<script type="text/javascript" src="{{URL::to('javascripts/jquery.peity.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::to('js/jquery.peity.min.js')}}"></script>
 <script>
 
 	$.fn.peity.defaults.bar = {
